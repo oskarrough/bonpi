@@ -1,17 +1,16 @@
-const ThermalPrinter = require("node-thermal-printer").printer
-const PrinterTypes = require("node-thermal-printer").types
+import {printer as ThermalPrinter} from 'node-thermal-printer'
+import {types as PrinterTypes} from 'node-thermal-printer'
 
-async function getEpsonPrinter() {
+export async function getEpsonPrinter() {
 	let printer = new ThermalPrinter({
 		type: PrinterTypes.EPSON,
 		interface: '/dev/usb/lp0',
-		//characterSet: 'SLOVENIA',
-		characterSet: 'ISO8859_2_LATIN2'
+		characterSet: 'ISO8859_2_LATIN2',
 		//removeSpecialCharacters: false,
 		//lineCharacter: "="
 	})
 	try {
-		let isConnected = await printer.isPrinterConnected()       
+		let isConnected = await printer.isPrinterConnected()
 	} catch (err) {
 		console.log('could not find printer')
 	}
@@ -19,8 +18,9 @@ async function getEpsonPrinter() {
 }
 
 async function printLinear({action, type, createdAt, data}) {
-	if (action ==='update') return
-	if (action ==='remove') return
+	if (action === 'update') return
+	if (action === 'remove') return
+
 	if (type === 'Comment') return printComment(data)
 	if (type === 'Issue') return printIssue(data)
 }
@@ -37,14 +37,13 @@ async function printIssue(data) {
 		const url = `https://linear.app/unicornworkspaces/issue/${data.team.key}-${data.number}/`
 		printer.printQR(url)
 	}
-	printer.cut()		
+	printer.cut()
 	try {
-		let execute = await printer.execute()                      
+		let execute = await printer.execute()
 	} catch (err) {
 		console.log('Print failed', err)
 	}
 }
-
 
 async function printComment(data) {
 	const printer = await getEpsonPrinter()
@@ -56,10 +55,10 @@ async function printComment(data) {
 	printer.newLine()
 	printer.println(data.body)
 	try {
-		let execute = await printer.execute()                      
+		let execute = await printer.execute()
 	} catch (err) {
 		console.log('Print failed', err)
 	}
 }
 
-module.exports = printLinear
+export default printLinear

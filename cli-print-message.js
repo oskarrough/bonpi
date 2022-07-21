@@ -1,10 +1,18 @@
+import {getEpsonPrinter} from './index.js'
+
 async function printMessage(msg) {
-	if (typeof process.argv[2] === 'String') msg = process.argv[2]
+	if (!msg || typeof msg !== 'String') return
 	const printer = await getEpsonPrinter()
 	printer.println(msg)
 	printer.cut()		
-	return await printer.execute()                      
+	await printer.execute()                      
+	process.exit()
 }
 
-module.exports = printMessage
+try {
+	const msg = process.argv[2]
+	printMessage(msg || false)
+} catch (err) {
+	console.log('nop', err)
+}
 
