@@ -1,4 +1,4 @@
-import {getEpsonPrinter} from './index.js'
+import getEpsonPrinter from './printer.js'
 
 async function printMessage(msg) {
 	if (!msg || typeof msg !== 'String') return

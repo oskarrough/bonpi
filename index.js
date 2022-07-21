@@ -1,28 +1,14 @@
-import {printer as ThermalPrinter} from 'node-thermal-printer'
-import {types as PrinterTypes} from 'node-thermal-printer'
+import getEpsonPrinter from './printer.js'
 
-export async function getEpsonPrinter() {
-	let printer = new ThermalPrinter({
-		type: PrinterTypes.EPSON,
-		interface: '/dev/usb/lp0',
-		characterSet: 'ISO8859_2_LATIN2',
-		//removeSpecialCharacters: false,
-		//lineCharacter: "="
-	})
-	try {
-		let isConnected = await printer.isPrinterConnected()
-	} catch (err) {
-		console.log('could not find printer')
-	}
-	return printer
 }
 
+// Called by the Linear webhook.
+// Depending on the data, it attempts to print something useful.
 async function printLinear({action, type, createdAt, data}) {
 	if (action === 'update') return
 	if (action === 'remove') return
-
-	if (type === 'Comment') return printComment(data)
 	if (type === 'Issue') return printIssue(data)
+	if (type === 'Comment') return printComment(data)
 }
 
 async function printIssue(data) {

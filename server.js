@@ -1,6 +1,6 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const printLinear = require("./index.js")
+import express from 'express'
+import bodyParser from 'body-parser'
+import printLinear from './index.js'
 
 const app = express()
 const port = 3000
