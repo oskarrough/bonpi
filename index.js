@@ -1,5 +1,8 @@
 import getEpsonPrinter from './printer.js'
+import dayjs from 'dayjs'
 
+export function formatDate(date) {
+	return dayjs(date).format('DD.MM.YYYY HH:mm')
 }
 
 // Called by the Linear webhook.
@@ -11,16 +14,18 @@ async function printLinear({action, type, createdAt, data}) {
 	if (type === 'Comment') return printComment(data)
 }
 
-async function printIssue(data) {
+export async function printIssue(data) {
 	const printer = await getEpsonPrinter()
+	printer.println(`New issue ${data.team.key}-${data.number}`)
 	printer.bold(true)
 	printer.println(data.title)
 	printer.bold(false)
-	printer.newLine()
+	printer.println(`${formatDate(data.createdAt)}`)
 	printer.println(data.description)
 	if (data.body) printer.println(data.body)
 	if (data.team) {
 		const url = `https://linear.app/unicornworkspaces/issue/${data.team.key}-${data.number}/`
+		printer.newLine()
 		printer.printQR(url)
 	}
 	printer.cut()
@@ -31,15 +36,17 @@ async function printIssue(data) {
 	}
 }
 
-async function printComment(data) {
+export async function printComment(data) {
 	const printer = await getEpsonPrinter()
-	printer.println(`New comment on `)
+	printer.print(`New comment on `)
 	printer.bold(true)
 	printer.print(data.issue.title)
 	printer.bold(false)
-	printer.print(` from ${data.user.name} at ${data.createdAt}:`)
+	printer.newLine()
+	printer.print(`${data.user.name} at ${formatDate(data.createdAt)}`)
 	printer.newLine()
 	printer.println(data.body)
+	printer.cut()
 	try {
 		let execute = await printer.execute()
 	} catch (err) {
