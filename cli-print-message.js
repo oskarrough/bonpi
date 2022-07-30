@@ -1,21 +1,12 @@
-import getEpsonPrinter from './printer.js'
+import print from './print.js'
 
-// Prints a string.
-// usage: node ./cli-send-message.js "hello there"
-async function printMessage(msg) {
-	if (!msg || typeof msg !== 'string') throw new Error('Missing a string message to print')
-	const p = await getEpsonPrinter()
-	p.print(msg)
-	p.cut()		
-	await p.execute()                      
-	process.exit()
-}
-
-// Call it.
+// Allows you to do this: node cli-print-message.js "hello there"
 try {
 	const msg = process.argv[2]
-	printMessage(msg || false)
+	const url = process.argv[3]
+	print({msg, url})
+	process.exit()
 } catch (err) {
 	console.log('Could not print', err)
+	process.exit(1)
 }
-

@@ -31,3 +31,9 @@ Bus 001 Device 002: ID 04b8:0202 Seiko Epson Corp. Interface Card UB-U05 for The
 
 - https://www.raspberrypi.com/documentation/computers/remote-access.html
 
+
+## Print via REST API
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"msg": "Radio Oskar. The channel of your wet dreams, an ode to perfume — for optimal peace and pleasure, shuffle this radio.", "url": "https://radio4000.com/oskar"}' localhost:3000/print
+```
