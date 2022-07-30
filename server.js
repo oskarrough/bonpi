@@ -1,6 +1,7 @@
+//@ts-check
 import express from 'express'
 import bodyParser from 'body-parser'
-import printLinear from './index.js'
+import printLinear from './print-linear.js'
 import print from './print.js'
 
 const app = express()
@@ -10,17 +11,16 @@ const port = 3000
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-	res.send('hello')
+	res.send('bonpi')
 })
 
 // Receive HTTP POST requests
 app.post('/my-linear-webhook', (req, res) => {
-	const payload = req.body
-	const {action, data, type, createdAt} = payload
-
 	// Do something neat with the data received
-	console.log(action, type, createdAt, data)
-	printLinear({action, type, createdAt, data})
+	// const payload = req.body
+	// const {action, data, type, createdAt} = payload
+	// console.log(action, type, createdAt, data)
+	printLinear(req.body)
 
 	// Finally, respond with a HTTP 200 to signal all good
 	res.sendStatus(200)
