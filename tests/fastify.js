@@ -1,24 +1,24 @@
 import Fastify from 'fastify'
 const fastify = Fastify({
-  logger: true
+	logger: true,
 })
 
 // Declare a route
 fastify.get('/', async (request, reply) => {
-	return { hello: 'world' }
+	return {hello: 'world'}
 })
 
 const opts = {}
 fastify.post('/print', opts, async (request, reply) => {
 	console.log(request.body)
 	console.log(request.querystring)
-	return { hello: 'print' }
+	return {hello: 'print'}
 })
 
 // Run the server!
 const start = async () => {
 	try {
-		await fastify.listen({ port: 3000 })
+		await fastify.listen({port: 3000})
 	} catch (err) {
 		fastify.log.error(err)
 		process.exit(1)
