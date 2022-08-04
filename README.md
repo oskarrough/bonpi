@@ -37,6 +37,7 @@ Easiest would be to get the zip from github.
 - Optionally install and use `ngrok` to expose the local server to the public
 
     ngrok http --subdomain bonpi 3000
+    ngrok http --region=eu --hostname=bonpi.eu.ngrok.io 80
 
 ## Trouble with permissions
 
@@ -45,7 +46,7 @@ Easiest would be to get the zip from github.
 
 ## Find local IPs
 
-	nmap 192.168.0.0/24
+	nmap -sn 192.168.0.0/24
 
 ## Find open ports
 

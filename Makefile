@@ -1,11 +1,16 @@
+host = bonpi@192.168.0.198
+
 all:
 	echo 'Hello there'
 
 ssh:
-	ssh bonpi@bonpi.local
+	ssh $(host)
 
 deploy:
-	rsync -azvh ./ bonpi@bonpi.local:~/printer/ --exclude node_modules --exclude .git --exclude .vscode
+	rsync -azvh ./ $(host):~/printer/ --exclude node_modules --exclude .git --exclude .vscode
 
 pull:
-	rsync -azvh bonpi@bonpi.local:~/printer/ ./ --exclude node_modules --exclude .git --exclude .vscode
+	rsync -azvh $(host):~/printer/ ./ --exclude node_modules --exclude .git --exclude .vscode
+
+expose-local-server:
+	ngrok http --subdomain xxx 3000 
