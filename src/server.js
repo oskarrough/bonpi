@@ -1,8 +1,8 @@
 //@ts-check
 import express from 'express'
 import bodyParser from 'body-parser'
-import printLinear from './print-linear.js'
 import print from './print.js'
+import printLinear from './print-linear.js'
 
 const app = express()
 const port = 3000

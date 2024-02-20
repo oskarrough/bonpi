@@ -65,3 +65,4 @@ Easiest would be to get the zip from github.
 
 	curl -X POST -H "Content-Type: application/json" -d '{"msg": "Radio Oskar. The channel of your wet dreams, an ode to perfume — for optimal peace and pleasure, shuffle this radio.", "url": "https://radio4000.com/oskar"}' localhost:3000/print
 
+	sudo raspi-config
