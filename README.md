@@ -1,12 +1,20 @@
 # Bonpi
 
-This repo explains how to print things on a thermal receipt printer. You can use it to print things yourself, or you could read this document for inspiration on how to do it yourself.
+This repo explains **how to print things on a thermal receipt printer using node.js**, optionally via a Raspberry Pi. The idea is the following:
 
-- First it establishes a connection to the printer. See `printer.js`. 
-- Next, there's a tiny `print()` function that prints simple messages and URLs into QR codes. See `print.js`.
-- Last, the function can optionally be exposed via a `POST` API endpoint. See `server.js`.
+We have a Raspberry Pi with some Linux installed. I used Ubuntu Server.
 
-As a bonus, there's a `print-linear.js` which is able to receive webhooks from Linear.app and prints new issues and comments.
+- connected to the Printer via USB
+- connected to the internet via Wi-Fi
+- runs the `src/server.js` script from this repo
+- expose it to the interwebs with ngrok
+		
+The server exposes two endpoints:
+
+- `/print` which accepts a JSON object with a required `msg` and an optional `url` property. It then prints the message and a QR code with the URL.
+- `/my-linear-webhook` is to be used as a webhook for Linear.app, and is able to print new issues, comments and more.
+		
+The server uses `printer.js` to connect to the printer. And `print.js` to actually print stuff.
 
 ## Step-by-step guide
 
@@ -45,6 +53,8 @@ Easiest would be to get the zip from github.
 ## Tips
 
 ### Trouble with permissions
+
+Most likely it won't print out of the box. I needed to run this to get the printer to respond:
 
 	usermod -a -G lp bonpi
 	sudo chmod +777 /dev/usb/lp0

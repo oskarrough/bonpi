@@ -6,14 +6,11 @@ import {types as PrinterTypes} from 'node-thermal-printer'
  * Sets up a connection to a specific Epson thermal printer.
  * @returns a new instance of ThermalPrinter
  */
-
 export default async function getEpsonPrinter() {
 	let printer = new ThermalPrinter({
 		type: PrinterTypes.EPSON,
 		interface: '/dev/usb/lp0',
-		characterSet: 'ISO8859_2_LATIN2',
-		//removeSpecialCharacters: false,
-		//lineCharacter: "="
+		// remember to check for more cool options in the README
 	})
 
 	try {
