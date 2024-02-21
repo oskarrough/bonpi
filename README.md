@@ -47,6 +47,10 @@ Easiest would be to get the zip from github.
 
 ### Optionally install and use `ngrok` to expose the local server to the public
 
+    ngrok http --domain blablabla.ngrok-free.app 3000
+
+or maybe this?
+
     ngrok http --subdomain bonpi 3000
     ngrok http --region=eu --hostname=bonpi.eu.ngrok.io 80
 
