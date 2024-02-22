@@ -45,6 +45,10 @@ Easiest would be to get the zip from github.
 
 	node server.js
 
+or
+
+    npx nodemon start
+
 ### Optionally install and use `ngrok` to expose the local server to the public
 
     ngrok http --domain blablabla.ngrok-free.app 3000
@@ -65,6 +69,7 @@ Most likely it won't print out of the box. I needed to run this to get the print
 
 ### Find local IPs
 
+    arp -a
 	nmap -sn 192.168.0.0/24
 
 ### Find open ports
@@ -80,3 +85,13 @@ Most likely it won't print out of the box. I needed to run this to get the print
 	curl -X POST -H "Content-Type: application/json" -d '{"msg": "Radio Oskar. The channel of your wet dreams, an ode to perfume — for optimal peace and pleasure, shuffle this radio.", "url": "https://radio4000.com/oskar"}' localhost:3000/print
 
 	sudo raspi-config
+
+
+### Running in the background
+
+You can either run `node start &` or use pm2:
+
+    npm i -g pm2
+    pm2 start src/server.js
+    pm2 start ngrok -- http --domain INSERTDOMAINHERE.ngrok-free.app 3000 > /dev/null &
+
